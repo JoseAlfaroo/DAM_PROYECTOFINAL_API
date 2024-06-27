@@ -1,0 +1,50 @@
+﻿USADO
+
+dotnet add package BCrypt.Net-Next --version 4.0.3
+dotnet add package Microsoft.EntityFrameworkCore --version 7.0.0
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 7.0.0
+dotnet add package Microsoft.EntityFrameworkCore.Tools --version 7.0.0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+A
+R
+G
+U
+S
