@@ -2,6 +2,7 @@
 using DAMI_WEBAPI_PROYECTOFINAL.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAMI_WEBAPI_PROYECTOFINAL.Controllers
 {
@@ -15,6 +16,35 @@ namespace DAMI_WEBAPI_PROYECTOFINAL.Controllers
         {
             _context = context;
         }
+
+
+        [HttpGet("{userId}")]
+        public async Task<IActionResult> GetByUserId(int userId)
+        {
+            try
+            {
+                var prestamos = await _context.Prestamos
+                    .Where(p => p.UserID == userId)
+                    .Select(p => new
+                    {
+                        p.PrestamoID,
+                        p.FechaPrestamo
+                    })
+                    .ToListAsync();
+
+                if (prestamos == null || prestamos.Count == 0)
+                {
+                    return NotFound(new { message = "No se encontraron préstamos para el usuario especificado." });
+                }
+
+                return Ok(prestamos);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = ex.ToString() });
+            }
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] PrestamoModel model)

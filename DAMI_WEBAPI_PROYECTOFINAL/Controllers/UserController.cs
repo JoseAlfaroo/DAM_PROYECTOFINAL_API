@@ -1,6 +1,7 @@
 ﻿using DAMI_WEBAPI_PROYECTOFINAL.Contexts;
 using DAMI_WEBAPI_PROYECTOFINAL.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -52,15 +53,36 @@ namespace DAMI_WEBAPI_PROYECTOFINAL.Controllers
                 return Conflict(new { message = "Correo ya registrado." });
             }
 
-            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(model.Password);
 
-            var user = new UserModel
+            UserModel user;
+
+            if (model.Password != null)
             {
-                Nombres = model.Nombres,
-                Apellidos = model.Apellidos,
-                Email = model.Email,
-                Password = hashedPassword
-            };
+
+                string hashedPassword = BCrypt.Net.BCrypt.HashPassword(model.Password);
+
+                user = new UserModel
+                {
+                    Nombres = model.Nombres,
+                    Apellidos = model.Apellidos,
+                    Email = model.Email,
+                    Password = hashedPassword
+                };
+            }
+            else
+            {
+
+                user = new UserModel
+                {
+                    Nombres = model.Nombres,
+                    Apellidos = model.Apellidos,
+                    Email = model.Email,
+                    Password = null
+                };
+            }
+
+
+
 
             try
             {
